@@ -33,6 +33,9 @@
               <value>com.epam.reportportal.testng.ReportPortalTestNGListener</value>
             </property>
           </properties>
+          <suiteXmlFiles>
+            <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+          </suiteXmlFiles>
         </configuration>
       </plugin>
     </plugins>

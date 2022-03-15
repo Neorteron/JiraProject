@@ -11,48 +11,34 @@ import org.testng.annotations.Test;
 
 
 public class NameFieldErrorAppeared {
+    private DesignerPage designerPage = new DesignerPage();
+    private ConfigProvider Provider = new ConfigLoader().get();
+    private LoginPage loginPage = new LoginPage();
 
     @BeforeClass
     public void openDesignerPage(){
-        ConfigProvider Provider = new ConfigLoader().get();
-        LoginPage loginPage = new LoginPage();
-
         loginPage.openPage()
                 .insertCredentials(Provider.getProperty("testdata.loginName.value", String.class), Provider.getProperty("testdata.loginPassword.value", String.class))
                 .submit()
-                .openNewSection();
+                .openNewSection()
+                .addBooleanInput()
+                .fillNameWithMoreThan100Characters()
+                .clickLabelInput();
     }
 
     @Test
     public void nameFieldErrorAppearedTest()   {
-
-        DesignerPage designerPage = new DesignerPage();
-        designerPage.addBooleanInput()
-                .fillNameWithMoreThan100Characters()
-                .clickLabelInput();
-
         Assert.assertTrue(designerPage.nameErrorMassageIsDisplayed(), "Error Massage is not Displayed");
     }
 
     @Test
     public void nameFieldErrorColorIsRedTest(){
-        DesignerPage designerPage = new DesignerPage();
-        designerPage.addBooleanInput()
-                .fillNameWithMoreThan100Characters()
-                .clickLabelInput();
-
         String errorColor = Color.fromString(designerPage.getErrorTextColor()).asHex();
         Assert.assertTrue(errorColor.contains("#f44336"), "Error color not match #f44336");
     }
 
     @Test
     public void borderNameColorIsRedTest(){
-
-        DesignerPage designerPage = new DesignerPage();
-        designerPage.addBooleanInput()
-                .fillNameWithMoreThan100Characters()
-                .clickLabelInput();
-
         String borderNameColor = Color.fromString(designerPage.getNameBorderColor()).asHex();
         Assert.assertTrue(borderNameColor.contains("#f44336"), "Border name color not match #f44336");
     }
