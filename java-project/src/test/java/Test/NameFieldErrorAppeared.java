@@ -5,38 +5,57 @@ import Page.LoginPage;
 import com.github.hardnorth.common.config.ConfigLoader;
 import com.github.hardnorth.common.config.ConfigProvider;
 import org.openqa.selenium.support.Color;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 
 public class NameFieldErrorAppeared {
 
-
-    @Test
-    public void NameFieldErrorAppearedTest()   {
-
-
+    @BeforeClass
+    public void openDesignerPage(){
         ConfigProvider Provider = new ConfigLoader().get();
         LoginPage loginPage = new LoginPage();
-        DesignerPage designerPage = loginPage.openPage()
+
+        loginPage.openPage()
                 .insertCredentials(Provider.getProperty("testdata.loginName.value", String.class), Provider.getProperty("testdata.loginPassword.value", String.class))
                 .submit()
-                .clickNewSection()
-                .addBooleanInput()
+                .openNewSection();
+    }
+
+    @Test
+    public void nameFieldErrorAppearedTest()   {
+
+        DesignerPage designerPage = new DesignerPage();
+        designerPage.addBooleanInput()
+                .fillNameWithMoreThan100Characters()
+                .clickLabelInput();
+
+        Assert.assertTrue(designerPage.nameErrorMassageIsDisplayed(), "Error Massage is not Displayed");
+    }
+
+    @Test
+    public void nameFieldErrorColorIsRedTest(){
+        DesignerPage designerPage = new DesignerPage();
+        designerPage.addBooleanInput()
                 .fillNameWithMoreThan100Characters()
                 .clickLabelInput();
 
         String errorColor = Color.fromString(designerPage.getErrorTextColor()).asHex();
-        String borderNameColor = Color.fromString(designerPage.getNameBorderColor()).asHex();
-
-        SoftAssert softAssertion= new SoftAssert();
-        softAssertion.assertTrue(designerPage.nameErrorMassageIsDisplayed(), "Error Massage is not Displayed");
-        softAssertion.assertTrue(errorColor.contains("#f44336"), "Error color not match #f44336");
-        softAssertion.assertTrue(borderNameColor.contains("#f44336"), "Border name color not match #f44336");
-        softAssertion.assertAll();
+        Assert.assertTrue(errorColor.contains("#f44336"), "Error color not match #f44336");
     }
 
+    @Test
+    public void borderNameColorIsRedTest(){
 
+        DesignerPage designerPage = new DesignerPage();
+        designerPage.addBooleanInput()
+                .fillNameWithMoreThan100Characters()
+                .clickLabelInput();
+
+        String borderNameColor = Color.fromString(designerPage.getNameBorderColor()).asHex();
+        Assert.assertTrue(borderNameColor.contains("#f44336"), "Border name color not match #f44336");
+    }
 
 
 }

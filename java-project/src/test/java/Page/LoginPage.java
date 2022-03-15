@@ -17,7 +17,6 @@ public class LoginPage {
         $(By.name("password")).setValue(password);
         return this;
     }
-
     public SectionsPage submit(){
         $(By.xpath("//button[@type='submit']")).click();
         return new SectionsPage();
