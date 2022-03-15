@@ -26,13 +26,13 @@ public class NameFieldErrorAppeared {
                 .fillNameWithMoreThan100Characters()
                 .clickLabelInput();
 
-        String errorColor = Color.fromString(designerPage.getErrorTextColor()).asHex();//#f44336
-        String borderNameColor = Color.fromString(designerPage.getNameBorderColor()).asHex();//#f44336
+        String errorColor = Color.fromString(designerPage.getErrorTextColor()).asHex();
+        String borderNameColor = Color.fromString(designerPage.getNameBorderColor()).asHex();
 
         SoftAssert softAssertion= new SoftAssert();
-        softAssertion.assertTrue(designerPage.nameErrorMassageIsDisplayed(), "Error Massage is not Displayer");
-        softAssertion.assertTrue(errorColor.contains("#f44336"), "Error color not match #f44335");
-        softAssertion.assertTrue(borderNameColor.contains("#f44336"), "Border name color not match #f44335");
+        softAssertion.assertTrue(designerPage.nameErrorMassageIsDisplayed(), "Error Massage is not Displayed");
+        softAssertion.assertTrue(errorColor.contains("#f44336"), "Error color not match #f44336");
+        softAssertion.assertTrue(borderNameColor.contains("#f44336"), "Border name color not match #f44336");
         softAssertion.assertAll();
     }
 
