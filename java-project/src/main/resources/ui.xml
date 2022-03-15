@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="Test-Suite" >
+<suite name="Smoke Suite" parallel="tests" thread-count="3">
     <listeners>
         <listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener"></listener>
         <listener class-name="Util.Listener"></listener>
