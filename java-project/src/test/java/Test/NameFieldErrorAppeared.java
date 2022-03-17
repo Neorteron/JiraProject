@@ -2,14 +2,19 @@ package Test;
 
 import Page.DesignerPage;
 import Page.LoginPage;
+import Util.Listener;
+import com.epam.reportportal.testng.ReportPortalTestNGListener;
 import com.github.hardnorth.common.config.ConfigLoader;
 import com.github.hardnorth.common.config.ConfigProvider;
 import org.openqa.selenium.support.Color;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 
+
+@Listeners({ReportPortalTestNGListener.class, Listener.class})
 public class NameFieldErrorAppeared {
     private DesignerPage designerPage = new DesignerPage();
     private ConfigProvider Provider = new ConfigLoader().get();
